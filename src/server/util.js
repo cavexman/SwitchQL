@@ -7,7 +7,7 @@ function toTitleCase(str) {
 function promiseTimeout(msDelay, promise) {
 
   //promise that rejects in <ms> milliseconds
-  let timeout = new Promise((resolve, reject) => {
+  const timeout = new Promise((resolve, reject) => {
     let id = setTimeout(() => {
       clearTimeout(id)
       reject(`Timed out in ${msDelay} ms`)
