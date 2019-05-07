@@ -9,6 +9,7 @@ import Form from "./Form.jsx";
 import Settings from "./Settings.jsx";
 import ZipFolder from "./ZipFolder.jsx";
 import * as events from "../server/events";
+import util from "../server/util"
 
 import logo from "./img/logo.png";
 import "loaders.css/src/animations/ball-scale-ripple-multiple.scss";
@@ -52,12 +53,11 @@ class App extends Component {
       			 Please check your connection
              string and try again`);
 
-      const id = setTimeout(() => {
+      util.timeOut(3000, () => {
         this.setState({
           isFormOpen: true
         });
-        clearTimeout(id);
-      }, 1500);
+      })
     });
 
     ipcRenderer.on(events.DATA, (event, args) => {

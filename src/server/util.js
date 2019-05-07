@@ -20,7 +20,15 @@ function promiseTimeout(msDelay, promise) {
   ])
 }
 
+function timeOut(msDelay, callback) {
+  let id = setTimeout(() => {
+    callback()
+    clearTimeout(id)
+  }, msDelay)
+}
+
 module.exports = {
   toTitleCase,
-  promiseTimeout
+  promiseTimeout,
+  timeOut
 };
