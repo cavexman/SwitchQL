@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Form from "./Form.jsx";
+import Settings from "./Settings.jsx";
 import ZipFolder from "./ZipFolder.jsx";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "./styles/main.css";
@@ -21,12 +22,16 @@ class App extends Component {
       mutations: "",
       queries: "",
       isFormOpen: true,
+      isSettingsOpen: false,
       tabIndex: 0,
       isLoading: false,
       exportDisabled: true,
-      formDisabled: false
+      formDisabled: false,
+      settingsDisabled: false
     };
 
+    this.showSettings = this.showSettings.bind(this);
+    this.hideSettings = this.hideSettings.bind(this);
     this.showForm = this.showForm.bind(this);
     this.hideForm = this.hideForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -42,7 +47,14 @@ class App extends Component {
       }));
       toast.error(`Could not connect to database.
       			 Please check your connection
-      			 string and try again`);
+             string and try again`);
+
+      const id = setTimeout(() => {
+        this.setState({
+          isFormOpen: true
+        });
+        clearTimeout(id);
+      }, 1500);
     });
 
     ipcRenderer.on(events.DATA, (event, args) => {
@@ -63,6 +75,18 @@ class App extends Component {
       });
       toast.success("Successfully Exported Code");
     });
+  }
+
+  showSettings() {
+    this.setState({ isSettingsOpen: true });
+  }
+
+  hideSettings() {
+    this.setState({ isSettingsOpen: false, tabIndex: 0 });
+  }
+
+  submitSettings(settingsData) {
+    ipcRenderer.send(events.SETTINGS, settingsData);
   }
 
   showForm() {
@@ -114,6 +138,14 @@ class App extends Component {
           <div className="headerFont">
             <img src={logo} className="logoMain" />
             switch<b>QL</b>
+            <button
+              type="button"
+              className="setttingsButton"
+              onClick={() => this.showSettings()}
+              disabled={this.state.settingsDisabled}
+            >
+              Settings
+            </button>
           </div>
 
           <Tabs
@@ -174,6 +206,12 @@ class App extends Component {
           onClose={this.hideForm}
           onSubmit={this.submitForm}
           isOpen={this.state.isFormOpen}
+        />
+
+        <Settings
+          onClose={this.hideSettings}
+          onSubmit={this.submitSettings}
+          isOpen={this.state.isSettingsOpen}
         />
       </div>
     );

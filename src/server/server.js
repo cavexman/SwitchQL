@@ -14,6 +14,7 @@ let mutationsMetaData;
 let queriesMetaData;
 
 ipcMain.on(events.URL, async (event, info) => {
+  // console.log(info);
   try {
     info = JSON.parse(info);
     if (info.value.length === 0) {
@@ -62,4 +63,9 @@ ipcMain.on(events.DIRECTORY, async (event, directory) => {
   } catch (err) {
     event.sender.send(events.APP_ERROR, JSON.stringify(err));
   }
+});
+
+ipcMain.on(events.SETTINGS, (event, info) => {
+  info = JSON.parse(info);
+  console.log(info);
 });

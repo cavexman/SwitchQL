@@ -3,6 +3,40 @@ html {
   width: 100%;
 }
 
+.setttingsButton {
+  position: relative;
+  border-radius: 6px;
+  float: right;
+  margin: 2% 1% auto 1%;
+  padding: 5px 10px;
+  left: 0vw;
+  width: 10vw;
+  font-family: "Raleway", sans-serif;
+  font-size: 15px;
+  background-image: linear-gradient(to top left, #2d3b75, #cf4299, #f19858);
+  color: white;
+  outline: none;
+  border: none;
+  box-shadow: 5px 5px 5px rgb(22, 22, 22);
+  filter: saturate(0%);
+  transition: 0.3s;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+}
+
+.setttingsButton:hover {
+  filter: saturate(100%);
+  opacity: 1;
+}
+
+.setttingsButton:disabled,
+.setttingsButton:disabled:hover,
+.btnDisabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .bottomButtons {
   position: relative;
   border-radius: 6px;
