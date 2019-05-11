@@ -8,13 +8,13 @@ const JSZip = require("jszip");
 const path = require("path");
 const events = require("./events");
 const PgSqlProvider = require("./Generators/classes/pgSqlProvider");
+const Store = require("electron-store");
 
 let schemaMetaData;
 let mutationsMetaData;
 let queriesMetaData;
 
 ipcMain.on(events.URL, async (event, info) => {
-  // console.log(info);
   try {
     info = JSON.parse(info);
     if (info.value.length === 0) {
@@ -65,7 +65,20 @@ ipcMain.on(events.DIRECTORY, async (event, directory) => {
   }
 });
 
-ipcMain.on(events.SETTINGS, (event, info) => {
-  info = JSON.parse(info);
-  console.log(info);
+let onStart = true;
+const store = new Store();
+ipcMain.on(events.SETTINGS, (event, info = {}) => {
+  if (onStart == true) {
+    const defaultSettings = {
+      databaseTimeout: 10000
+    };
+    store.set(defaultSettings);
+    event.sender.send(events.SETTINGS_DATA, store.get());
+    onStart = false;
+  } else {
+    for (const setting of Object.keys(info)) {
+      store.set(setting, info[setting]);
+    }
+    event.sender.send(events.SETTINGS_DATA, store.get());
+  }
 });

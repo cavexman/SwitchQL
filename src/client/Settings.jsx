@@ -1,65 +1,41 @@
 import React, { Component } from "react";
 import "./styles/form.css";
+import { ipcRenderer } from "electron";
+import * as events from "../server/events";
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // Grab 'databaseTimeout' value from backend
-      databaseTimeout: "10000",
-      formError: { incomplete: false, emptySubmit: false }
+      // Defaults set from backend
+      databaseTimeout: 0
     };
 
     this.valueChange = this.valueChange.bind(this);
     this.submit = this.submit.bind(this);
   }
 
+  componentDidMount() {
+    ipcRenderer.on(events.SETTINGS_DATA, (sender, args) => {
+      this.setState({
+        databaseTimeout: args.databaseTimeout
+      });
+    });
+  }
+
   valueChange({ target }) {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    if (name === "databaseTimeout") this.setState({ [name]: Number(value) });
+    else this.setState({ [name]: value });
   }
 
   submit() {
     event.preventDefault();
-    if (!this.isFormValid()) return false;
-
-    this.props.onSubmit(JSON.stringify(this.state));
-    this.setState({
-      formError: { incomplete: false }
-    });
-  }
-
-  isFormValid() {
-    let incompleteField = false;
-
-    for (let field in this.state) {
-      if (field !== "formError") {
-        if (this.state[field] === "") incompleteField = true;
-      }
-    }
-
-    if (incompleteField === true) {
-      this.setState({ formError: { incomplete: true } });
-      return false;
-    }
-
-    return true;
+    this.props.onSubmit(this.state);
   }
 
   render() {
-    let formError;
-
-    if (this.state.formError.incomplete) {
-      formError = (
-        <div className="warning">
-          <b>*</b>These fields are required.
-        </div>
-      );
-    } else if (this.state.formError.emptySubmit) {
-      formError = <div className="warning">Empty Submit!</div>;
-    }
-
     const classList = this.props.isOpen
       ? `formvis fadeInScale`
       : `formvis fadeOutScale`;
@@ -99,7 +75,6 @@ export default class Form extends Component {
             >
               ×
             </button>
-            {formError}
           </div>
         </form>
       </div>

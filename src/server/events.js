@@ -4,6 +4,7 @@ const URL = "url";
 const DIRECTORY = "directory";
 const EXPORT_SUCCESS = "exportSuccess";
 const SETTINGS = "settings";
+const SETTINGS_DATA = "settingsData";
 
 module.exports = {
   APP_ERROR,
@@ -11,5 +12,6 @@ module.exports = {
   URL,
   DIRECTORY,
   EXPORT_SUCCESS,
-  SETTINGS
+  SETTINGS,
+  SETTINGS_DATA
 };

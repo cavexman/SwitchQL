@@ -9,13 +9,12 @@ import Form from "./Form.jsx";
 import Settings from "./Settings.jsx";
 import ZipFolder from "./ZipFolder.jsx";
 import * as events from "../server/events";
-import util from "../server/util"
+import util from "../server/util";
 
 import logo from "./img/logo.png";
 import "loaders.css/src/animations/ball-scale-ripple-multiple.scss";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/main.css";
-
 
 class App extends Component {
   constructor(props) {
@@ -57,7 +56,7 @@ class App extends Component {
         this.setState({
           isFormOpen: true
         });
-      })
+      });
     });
 
     ipcRenderer.on(events.DATA, (event, args) => {
@@ -82,6 +81,7 @@ class App extends Component {
 
   showSettings() {
     this.setState({ isSettingsOpen: true });
+    ipcRenderer.send(events.SETTINGS);
   }
 
   hideSettings() {
