@@ -1,7 +1,7 @@
-import processed from "./sampleFiles/processedMetadata";
-import retrieved from "./sampleFiles/retrievedMetadata";
+import processed from "./sampleFiles/processedMetadata.js";
+import retrieved from "./sampleFiles/retrievedMetadata.js";
 
-import processMetadata from "./pgMetadataProcessor";
+import processMetadata from "./pgMetadataProcessor.js";
 
 describe("Format Metadata Tests", () => {
   it("Should return correctly formatted metadata given sample input", () => {

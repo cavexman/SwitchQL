@@ -8,7 +8,6 @@ export default class Form extends Component {
     super(props);
 
     this.state = {
-      // Defaults set from backend
       databaseTimeout: 0
     };
 

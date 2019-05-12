@@ -1,6 +1,6 @@
-const TypeBuilder = require("./classes/typeBuilder");
-const MutationBuilder = require("./classes/mutationBuilder");
-const QueryBuilder = require("./classes/queryBuilder");
+const TypeBuilder = require("./classes/typeBuilder.js");
+const MutationBuilder = require("./classes/mutationBuilder.js");
+const QueryBuilder = require("./classes/queryBuilder.js");
 
 function generateGraphQL(tables, dbProvider) {
   if (Object.keys(tables).length == 0)

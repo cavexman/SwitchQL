@@ -1,4 +1,4 @@
-const pgMetadataRetriever = require("./pgMetadataRetriever");
+const pgMetadataRetriever = require("./pgMetadataRetriever.js");
 
 test("takes in object with data returns properly formatted string", () => {
   expect(

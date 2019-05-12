@@ -1,6 +1,8 @@
 const pgp = require("pg-promise")();
 const crypto = require("crypto");
-const utilty = require("../util");
+
+const utilty = require("../util.js");
+const { appSettingsStore } = require("../settings.js");
 
 const poolCache = {};
 
@@ -53,7 +55,7 @@ async function getSchemaInfoPG(connString) {
   const db = getDbPool(connString);
   try {
     return (metadataInfo = await utilty.promiseTimeout(
-      10000,
+      appSettingsStore.get("databaseTimeout"),
       db.any(metadataQuery)
     ));
   } catch (err) {

@@ -3,7 +3,8 @@ const url = require("url");
 const path = require("path");
 const { app, BrowserWindow, Menu } = electron;
 
-require("./server/server");
+const { LoadSettings } = require("./server/settings.js");
+require("./server/server.js");
 
 let mainWindow;
 
@@ -16,9 +17,6 @@ app.on("ready", function() {
     backgroundColor: "#050b13"
     // titleBarStyle: 'customButtonsOnHover', frame: false
   });
-  // mainWindow.settings = {
-  //   databaseTimeout: "10000"
-  // }
   //Load HTML into window
   mainWindow.loadURL(
     url.format({
@@ -27,6 +25,8 @@ app.on("ready", function() {
       slashes: true
     })
   );
+  //Load Settings for App
+  LoadSettings();
   //Quit App when closed
   mainWindow.on("closed", function() {
     app.quit();

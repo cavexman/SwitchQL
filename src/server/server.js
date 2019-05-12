@@ -1,14 +1,15 @@
 const electron = require("electron");
 const { ipcMain } = electron;
-const dbController = require("./DBMetadata/pgMetadataRetriever");
-const processMetaData = require("./DBMetadata/pgMetadataProcessor");
-const generateGraphQL = require("./Generators/graphQLGenerator");
 const fs = require("fs");
 const JSZip = require("jszip");
 const path = require("path");
-const events = require("./events");
-const PgSqlProvider = require("./Generators/classes/pgSqlProvider");
-const Store = require("electron-store");
+
+const events = require("./events.js");
+const dbController = require("./DBMetadata/pgMetadataRetriever.js");
+const processMetaData = require("./DBMetadata/pgMetadataProcessor.js");
+const generateGraphQL = require("./Generators/graphQLGenerator.js");
+const PgSqlProvider = require("./Generators/classes/pgSqlProvider.js");
+const { SaveSettings, appSettingsStore } = require("./settings.js");
 
 let schemaMetaData;
 let mutationsMetaData;
@@ -65,20 +66,7 @@ ipcMain.on(events.DIRECTORY, async (event, directory) => {
   }
 });
 
-let onStart = true;
-const store = new Store();
-ipcMain.on(events.SETTINGS, (event, info = {}) => {
-  if (onStart == true) {
-    const defaultSettings = {
-      databaseTimeout: 10000
-    };
-    store.set(defaultSettings);
-    event.sender.send(events.SETTINGS_DATA, store.get());
-    onStart = false;
-  } else {
-    for (const setting of Object.keys(info)) {
-      store.set(setting, info[setting]);
-    }
-    event.sender.send(events.SETTINGS_DATA, store.get());
-  }
+ipcMain.on(events.SETTINGS, (event, settingsData = {}) => {
+  SaveSettings(settingsData);
+  event.sender.send(events.SETTINGS_DATA, appSettingsStore.get());
 });

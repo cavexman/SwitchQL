@@ -1,5 +1,5 @@
-const ProcessedField = require("./classes/processedField");
-const ProcessedTable = require("./classes/processedTable");
+const ProcessedField = require("./classes/processedField.js");
+const ProcessedTable = require("./classes/processedTable.js");
 
 function processMetadata(columnData) {
   if (!columnData || columnData.length === 0)

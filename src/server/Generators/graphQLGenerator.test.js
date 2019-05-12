@@ -1,8 +1,8 @@
-import generateGraphQL from "./graphQLGenerator";
-import mutationOutput from "./sampleFiles/mutationOutput";
-import queryOutput from "./sampleFiles/queryOutput";
-import input from "../DBMetadata/sampleFiles/processedMetadata";
-import PgSqlProvider from "./classes/pgSqlProvider";
+import generateGraphQL from "./graphQLGenerator.js";
+import mutationOutput from "./sampleFiles/mutationOutput.js";
+import queryOutput from "./sampleFiles/queryOutput.js";
+import input from "../DBMetadata/sampleFiles/processedMetadata.js";
+import PgSqlProvider from "./classes/pgSqlProvider.js";
 
 describe("Mutation Generation Tests", () => {
   it("Should correctly generate mutations given input file", () => {

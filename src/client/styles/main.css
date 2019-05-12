@@ -75,6 +75,7 @@
 
 .areaOne::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .areaOne::-webkit-scrollbar-thumb {

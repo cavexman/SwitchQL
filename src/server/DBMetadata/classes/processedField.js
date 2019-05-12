@@ -86,12 +86,12 @@ class ProcessedField {
 
       const refIndex = `${lookup[foreign_table_name].INDEX}.${
         lookup[foreign_table_name][foreign_column_name]
-        }`;
+      }`;
       this.relation[refIndex] = relationship;
 
       const relatedTo =
         data.tables[lookup[foreign_table_name].INDEX].fields[
-        lookup[foreign_table_name][foreign_column_name]
+          lookup[foreign_table_name][foreign_column_name]
         ];
 
       const relToRefIndex = `${this.tableNum}.${this.fieldNum}`;
